@@ -1,8 +1,6 @@
 #!/bin/bash
 
-a = int(input())
-b = int(input())
+a = int(input("wala nang totoo sa lipunan:"))
+b = int(input("simulasyon lang tayong lahat:"))
 
 print(a * b)
-
-print("Ang tunay na sagot ay,", a / b)
