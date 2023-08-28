@@ -5,4 +5,4 @@ b = int(input())
 
 print(a * b)
 
-print("Oh my God Amen Amen")
+print("Teka parang fake kasi", a % b)
