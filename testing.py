@@ -5,4 +5,4 @@ b = int(input())
 
 print(a * b)
 
-print("Ang tunay na sagot ay,", a / b)
+print("Oh my God Amen Amen")
