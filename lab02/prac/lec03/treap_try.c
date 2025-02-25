@@ -1,8 +1,7 @@
 #include <assert.h>
 #include <stdio.h>
-#include <stdint.h>
 #include <stdlib.h>
-#include <string.h>
+#include <stdint.h>
 #include <stdbool.h>
 
 typedef int64_t data_t;
@@ -14,9 +13,12 @@ typedef struct Node {
     struct Node *l, *r;
 } Node;
 
-
 prio_t rand_prio() {
-    return ((prio_t)rand() << 48) ^ ((prio_t)rand() << 32) ^ ((prio_t)rand() << 16) ^ rand();
+    prio_t res = 0;
+    for (int i = 0; i < 4; i++) {
+        res = (res << 16) ^ rand();
+    }
+    return res;
 }
 
 Node *create_node(data_t val) {
@@ -27,11 +29,9 @@ Node *create_node(data_t val) {
     return node;
 }
 
-
 void split(Node *node, data_t val, Node **l, Node **mid, Node **r) {
     if (node == NULL) {
         *l = *mid = *r = NULL;
-        return;
     } else if (val == node->val) {
         *l = (node->l);
         *mid = node;
@@ -47,7 +47,6 @@ void split(Node *node, data_t val, Node **l, Node **mid, Node **r) {
     }
 }
 
-
 Node *merge(Node *l, Node *r) {
     if (l == NULL) {
         return r;
@@ -57,39 +56,34 @@ Node *merge(Node *l, Node *r) {
     }
 
     if (l->priority > r->priority) {
-        // l becomes the root
         l->r = merge(l->r, r);
         return l;
     } else {
-        // r becomes the root
         r->l = merge(l, r->l);
         return r;
     }
 }
 
-
 Node *add(Node *node, data_t val) {
-    Node *l, *mid, *r = malloc(sizeof(Node));
-    split(node, val, l, mid, r);
+    Node *l, *mid, *r;
+    split(node, val, &l, &mid, &r);
     if (!mid) {
         mid = create_node(val);
-    }
+    } 
     return merge(merge(l, mid), r);
 }
 
-
 Node *remove(Node *node, data_t val) {
-    Node *l, *mid, *r = malloc(sizeof(Node));
-    split(node, val, l, mid, r);
+    Node *l, *mid, *r;
+    split(node, val, &l, &mid, &r);
     if (mid) {
         free(mid);
     }
     return merge(l, r);
 }
 
-
-bool contains(Node *node, data_t val) {
-    if (!node) {
+bool contains(Node* node, data_t val) {
+    if (node == NULL) {
         return false;
     }
 
@@ -98,32 +92,29 @@ bool contains(Node *node, data_t val) {
     } else if (val > node->val) {
         return contains(node->r, val);
     } else {
+        assert(val == node->val);
         return true;
     }
 }
 
-
 int height(Node *node) {
-    if (!node) {
+    if (node == NULL) {
         return 0;
     }
-    data_t lh = height(node->l);
-    data_t rh = height(node->r);
-    return 1 + (lh > rh ? lh: rh);
+    int lh = height(node->l);
+    int rh = height(node->r);
+    return 1 + (lh > rh ? lh : rh);
 }
 
-
 int count_nodes(Node *node) {
-    if (!node) {
+    if (node == NULL) {
         return 0;
     }
     return 1 + count_nodes(node->l) + count_nodes(node->r);
 }
 
 
-
-// class OrderedSet
-
+// ordered set
 typedef struct {
     Node *root;
     int size;
@@ -152,7 +143,7 @@ int ordered_set_count(OrderedSet *set) {
 }
 
 void free_tree(Node *node) {
-    if (!node) {
+    if (node == NULL) {
         return;
     }
     free_tree(node->l);
@@ -178,6 +169,4 @@ int main() {
     
     return 0;
 }
-
-
 
