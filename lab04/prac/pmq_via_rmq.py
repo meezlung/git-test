@@ -5,10 +5,12 @@ from dataclasses import dataclass, field
 from itertools import product
 from math import inf
 
-from utils import Edge
-
 from rmq_segtree import RMQ
 
+@dataclass
+class Edge:
+    i: int
+    j: int
 
 @dataclass
 class Node:
@@ -106,6 +108,7 @@ class PMQ:
         pre = self.root.preorder2()
 
         # initialize RMQ on preorder
+        print([node.value for node in pre])
         self.rmq = RMQ([node.value for node in pre])
 
         super().__init__()
@@ -157,3 +160,16 @@ def offline_pmq(values: Sequence[int], edges: Sequence[Edge], queries: Sequence[
     # just solve offline PMQ online
     pmq = PMQ(values, edges)
     return [pmq.path_min(i, j) for i, j in queries]
+
+
+if __name__ == '__main__':
+    values = [1, 2, 3, 4, 5]
+    edges = [
+        Edge(0, 1), 
+        Edge(0, 2), 
+        Edge(1, 3), 
+        Edge(1, 4)
+    ]
+    queries = [(0, 3), (2, 4), (1, 4), (0, 1), (1, 2), (2, 3), (3, 4)]
+
+    print(offline_pmq(values, edges, queries))
