@@ -1,0 +1,3 @@
+The bugs have been fixed. It was again the brute force that was wrong---the heavy path decomposition was correct! (modulo some easy-to-fix issues)
+
+- Kevin
