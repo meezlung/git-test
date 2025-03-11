@@ -3,7 +3,7 @@
 from dataclasses import dataclass
 from random import getrandbits
 
-@dataclass(frozen=True)
+@dataclass
 class Node:
     val: int
     priority: int
