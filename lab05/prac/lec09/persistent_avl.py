@@ -175,11 +175,9 @@ class OrderedSet:
         self.root = root
 
     def add(self, val: int) -> "OrderedSet":
-        """Return a new OrderedSet with val added."""
         return OrderedSet(add(self.root, val))
 
     def remove(self, val: int) -> "OrderedSet":
-        """Return a new OrderedSet with val removed."""
         return OrderedSet(remove(self.root, val))
 
     def __contains__(self, val: int) -> bool:
@@ -189,7 +187,6 @@ class OrderedSet:
         return subtree_size(self.root)
 
     def __getitem__(self, index: int) -> int:
-        """Return the value at position index (0-indexed) in sorted order."""
         if index < 0 or index >= len(self):
             raise IndexError("Index out of range")
         return kth(self.root, index)
