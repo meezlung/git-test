@@ -1,19 +1,3 @@
-def naive_mat_mult(A, B):
-    """
-    Perform standard matrix multiplication (A @ B).
-    A is an m×n matrix, B is an n×p matrix. Returns m×p matrix.
-    """
-    m, n = len(A), len(A[0])
-    # assume B has dimensions n x p
-    p = len(B[0])
-    # initialize result
-    C = [[0] * p for _ in range(m)]
-    for i in range(m):
-        for k in range(n):
-            for j in range(p):
-                C[i][j] += A[i][k] * B[k][j]
-    return C
-
 def identity_matrix(n):
     """Return the n×n identity matrix."""
     return [[1 if i == j else 0 for j in range(n)] for i in range(n)]

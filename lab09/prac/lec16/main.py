@@ -374,10 +374,12 @@ if __name__ == "__main__":
 
     print("\nTesting sieve:")
     prime_bool = sieve_of_eratosthenes(30)
+    print(prime_bool)
     print("Primes up to 30:", [i for i, is_p in enumerate(prime_bool) if is_p])
 
     print("\nTesting smallest_prime_factor_sieve and prime_factorization:")
     spf = smallest_prime_factor_sieve(50)
+    print(spf)
     print("Factorization of 48:", prime_factorization(48, spf))
 
     print("\nTesting Rational class:")
