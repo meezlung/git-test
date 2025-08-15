@@ -25,11 +25,13 @@ def mats_needed(item: str, recipes: list[Recipe]) -> frozenset[ItemCount]:
 
         for current_item, current_count in current_needed.items():
             if current_item in recipe_dict:  #expand the recipe
+                print("ingredient", recipe_dict[current_item])
                 for ingredient in recipe_dict[current_item]:
                     needed[ingredient.item] = (
                         needed.get(ingredient.item, 0) + ingredient.count * current_count
                     ) % MOD
             else:  #base mats
+                print("base mats", current_item)
                 base_materials[current_item] = (
                     base_materials.get(current_item, 0) + current_count
                 ) % MOD
@@ -50,7 +52,7 @@ assert mats_needed("bed", [
         ItemCount(item="string", count=12),
         ItemCount(item="plank", count=3),
     ])
-
+print()
 assert mats_needed("diamond_sword", [
         Recipe(item="diamond_sword", ingredients=[
             ItemCount(item="diamond", count=2),
@@ -59,6 +61,7 @@ assert mats_needed("diamond_sword", [
         ItemCount(item="diamond", count=2),
         ItemCount(item="stick", count=1),
     ])
+print()
 
 # edge cases
 assert mats_needed("chest", [
@@ -68,7 +71,7 @@ assert mats_needed("chest", [
     ]) == frozenset([
         ItemCount(item="plank", count=8),
     ])
-
+print()
 assert mats_needed("torch", [
         Recipe(item="torch", ingredients=[
             ItemCount(item="stick", count=1),
@@ -95,7 +98,7 @@ assert mats_needed("diamond_sword", [
     ]) == frozenset([
         ItemCount(item="diamond", count=2),
     ])
-
+print()
 assert mats_needed("barrel", [
         Recipe(item="barrel", ingredients=[
             ItemCount(item="plank", count=7),

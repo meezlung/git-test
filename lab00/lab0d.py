@@ -14,7 +14,7 @@
 from collections import defaultdict, deque
 
 def winnable(n: int, pillars: list[list[int]]) -> bool:
-    stacks = [pillar[::-1] for pillar in pillars] # reverse pillars each pillar is given in order from bottom to top
+    stacks = [pillar for pillar in pillars] # reverse pillars each pillar is given in order from bottom to top
 
     top_colors_of_pillars: dict[int, set[int]] = defaultdict(set)
     ready_to_match: deque[int] = deque()
@@ -26,11 +26,15 @@ def winnable(n: int, pillars: list[list[int]]) -> bool:
             if len(top_colors_of_pillars[top_color]) == 2:
                 ready_to_match.append(top_color)
 
-    print(stacks)
+    print("stacks", stacks)
+    print("top_colors", top_colors_of_pillars)
+    print("ready_to_match", ready_to_match)
 
     while ready_to_match:
         color = ready_to_match.popleft()
         p = list(top_colors_of_pillars[color])
+
+        # print("top_colors", top_colors_of_pillars)
 
         print(p)
 
@@ -38,11 +42,15 @@ def winnable(n: int, pillars: list[list[int]]) -> bool:
         for pillar in p:
             stacks[pillar].pop()
             top_colors_of_pillars[color].remove(pillar)
+            print("top_colors2", top_colors_of_pillars)
+
 
             # update the map na
             if stacks[pillar]:
                 new_top = stacks[pillar][-1]
                 top_colors_of_pillars[new_top].add(pillar)
+                print("top_colors3", top_colors_of_pillars)
+
 
                 if len(top_colors_of_pillars[new_top]) == 2:
                     ready_to_match.append(new_top)
